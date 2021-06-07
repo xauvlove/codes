@@ -54,7 +54,7 @@ public class MapperXml生成 {
             "\t\t</trim>\n" +
             "\t</insert>\n";
 
-    private static String updateSelectiveById = "\t<update id=\"updateSelective\" parameterType=\"xx.xx.xx.xx.xx.xx.xx.xxxDO\">\n" +
+    private static String updateSelectiveById = "\t<update id=\"updateSelectiveById\" parameterType=\"xx.xx.xx.xx.xx.xx.xx.xxxDO\">\n" +
             "\t\tupdate\n" +
             "\t\t<include refid=\"tableName\"></include>\n" +
             "\t\tset\n" +
@@ -197,7 +197,7 @@ public class MapperXml生成 {
                 cs[i] = list.get(i);
             }
             columns.add(String.valueOf(cs));
-            stringBuilder.append(String.valueOf(cs)).append(",");
+            stringBuilder.append(String.valueOf(cs)).append(", ");
         }
         return stringBuilder.toString();
     }
