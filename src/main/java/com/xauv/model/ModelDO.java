@@ -10,108 +10,46 @@ import java.util.Date;
  */
 public class ModelDO {
 
+
+
     /**
-     * 主键 id
+     * 主键，自动增长
      */
     private Long id;
 
     /**
-     * 高校 id
+     * 创建时间，自动设置为当前时间
      */
-    private Long universityId;
+    private Date gmtCreate;
 
     /**
-     * 高校 名称
+     * 修改时间，自动更新为当前时间
      */
-    private String universityName;
+    private Date gmtModified;
 
     /**
-     * 是否有研究生院
+     * 流程ID
      */
-    private Boolean hasPostgraduateInstitute;
+    private Long flowId;
 
     /**
-     * 高校从属关系：从属于 交易部，工信部
+     * 节点名称
      */
-    private String subordination;
+    private String name;
 
     /**
-     * 是否自主划线
+     * 节点代码
      */
-    private Boolean decidePassingScoreBySelf;
+    private String code;
 
     /**
-     * 在线咨询网站
+     * 节点类型
      */
-    private String questionSite;
+    private String type;
 
     /**
-     * 高校说明
+     * 节点内容
      */
-    private String notationSite;
+    private String content;
 
-    /**
-     * 调剂信息
-     */
-    private String adjustmentSite;
-
-    /**
-     * 招生网站
-     */
-    private String recruitmentSite;
-
-    /**
-     * 高校所在地编码
-     */
-    private String locationCode;
-
-    /**
-     * 高校所在地名称：
-     * 北京
-     * 河北
-     * 江苏
-     * 天津
-     */
-    private String locationName;
-
-    /**
-     * 高校所在二级地 编码
-     */
-    private String subLocationCode;
-
-    /**
-     * 高校所在二级地 编码
-     * 比如 武汉 石家庄
-     */
-    private String subLocationName;
-
-    /**
-     * 是否 985 工程院校
-     */
-    private Boolean projectNef;
-
-    /**
-     * 是否 211 工程院校
-     */
-    private Boolean projectToo;
-
-    /**
-     * 是否双一流高校
-     */
-    private Boolean projectFirstClassUniversity;
-
-    /**
-     * 是否双一流学科高校
-     */
-    private Boolean projectFirstClassSubject;
-
-    /**
-     * createdAt
-     */
-    private Date createdAt;
-
-    /**
-     * updatedAt
-     */
-    private Date updatedAt;
 }

@@ -1,9 +1,11 @@
 package com.xauv;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import com.xauv.model.ModelDO;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +31,10 @@ public class MapperXml生成 {
     private static String efficientColumn = "\t<sql id=\"efficientColumn\">\n" +
             "<#>\n" +
             "\t</sql>\n";
+
+    private static String resultMap = "\t<resultMap id=\"baseResultMap\" type=xxxxx.com.model>\n" +
+            "<#>\n" +
+            "\t\n";
 
     private static String selectiveKeys = "\t<sql id=\"selectiveKeys\">\n" +
             "<#>\n" +
@@ -82,6 +88,9 @@ public class MapperXml生成 {
         xmlContent.append("\n");
 
         xmlContent.append(efficientColumn.replace("<#>", generateEfficientColumnsName(ModelDO.class)));
+        xmlContent.append("\n");
+
+        xmlContent.append(resultMap.replace("<#>", generateResultMap(ModelDO.class)));
         xmlContent.append("\n");
 
         xmlContent.append(selectiveKeys.replace("<#>", generateSelectiveKeys(ModelDO.class)));
@@ -199,6 +208,52 @@ public class MapperXml生成 {
             columns.add(String.valueOf(cs));
             stringBuilder.append(String.valueOf(cs)).append(", ");
         }
+        return stringBuilder.toString();
+    }
+
+    public static String generateResultMap(Class<?> clazz) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Field declaredField : clazz.getDeclaredFields()) {
+            String name = declaredField.getName();
+            List<Character> list = new ArrayList<>();
+            char[] chars = name.toCharArray();
+            // 驼峰转下划线
+            for (int i = 0; i < chars.length; i++) {
+                char aChar = chars[i];
+                if (aChar >= 65 && aChar <= 90) {
+                    aChar = Character.toLowerCase(aChar);
+                    list.add('_');
+                }
+                list.add(aChar);
+            }
+            char[] cs = new char[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                cs[i] = list.get(i);
+            }
+            String jdbCType = null;
+
+            Class<?> type = declaredField.getType();
+            if (type == Date.class) {
+                jdbCType = "TIMESTAMP";
+            }
+            if (type == String.class) {
+                jdbCType = "VARCHAR";
+            }
+            if (type == Long.class) {
+                jdbCType = "BIGINT";
+            }
+            if (type == Integer.class) {
+                jdbCType = "INTEGER";
+            }
+
+            if (name.equals("id")) {
+                stringBuilder.append("\t\t<id property=\"id\" column=\"id\" jdbcType=\"BIGINT\"/>\n");
+            } else {
+                stringBuilder.append("\t\t<result property=" + "\"" + name + "\"" +" column=" + "\"" +String.valueOf(cs) + "\"" + " jdbcType=" + "\"" + jdbCType + "\"" + "/>\n");
+            }
+
+        }
+        stringBuilder.append("\t</resultMap>");
         return stringBuilder.toString();
     }
 
